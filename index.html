@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Мои товары и услуги</title>
+
+  <!-- Стиль: нежный голубой, фиолетовый и металлик -->
+  <style>
+    /* --- Общие стили --- */
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#e9f6ff; color:#222; }
+    header { background: linear-gradient(135deg, #b8a7ff, #9fd8ff, #c0c0c0); padding:24px; text-align:center; color:#fff; }
+    h1 { margin:0; font-size:2.2rem; }
+
+    /* --- Контейнеры --- */
+    .wrap { max-width:1200px; margin:20px auto; padding:0 16px; }
+    .section-title { font-size:1.4rem; margin:12px 0; color:#2b2b2b; }
+
+    /* --- Сетка карточек --- */
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:18px; }
+    .card { background:#fff; border-radius:12px; padding:14px; box-shadow:0 6px 18px rgba(9,30,66,0.08); transition:transform .16s; cursor:pointer; }
+    .card:hover{ transform:translateY(-6px); }
+    .card img{ width:100%; height:160px; object-fit:cover; border-radius:8px; }
+    .card-title{ font-weight:700; margin:10px 0 6px; }
+    .card-desc{ font-size:0.95rem; margin-bottom:8px; color:#444; }
+    .price{ color:#6f3cff; font-weight:700; margin-bottom:10px; }
+    .btn{ display:inline-block; padding:9px 12px; border-radius:8px; background:#6f3cff; color:#fff; border:none; cursor:pointer; }
+
+    /* --- Модал --- */
+    .modal-bg{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.52); align-items:center; justify-content:center; z-index:999; }
+    .modal { background:#fff; width:92%; max-width:560px; border-radius:12px; padding:18px; position:relative; }
+    .close-btn{ position:absolute; right:12px; top:8px; font-size:20px; cursor:pointer; }
+
+    /* --- Карусель --- */
+    .carousel{ border-radius:10px; overflow:hidden; margin-bottom:10px; }
+    .carousel img{ width:100%; height:260px; object-fit:cover; display:none; }
+    .carousel img.active{ display:block; }
+    .carousel-controls{ text-align:center; margin-bottom:10px; }
+    .carousel-controls button{ margin:0 6px; padding:6px 10px; border-radius:8px; border:none; cursor:pointer; background:#6f3cff; color:#fff; }
+
+    /* --- Мелкие элементы --- */
+    .meta { font-size:0.9rem; color:#666; }
+
+    /* Комментарии: можно вынести стили в отдельный файл и подключить здесь */
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Мои товары и услуги ✨</h1>
+  <p style="margin-top:8px; color:rgba(255,255,255,0.92);">Витрина — карточки товаров, модальное окно с каруселью и подробностями</p>
+</header>
+
+<div class="wrap">
+
+  <!-- УСЛУГИ -->
+  <h2 class="section-title">Услуги 💼</h2>
+  <p class="meta">Ниже перечислены все виды занятий и их цены. Нажмите «Купить», чтобы увидеть карточку товара в модальном окне.</p>
+
+  <div class="grid">
+    <!-- Карточка: индивидуальное занятие взрослому -->
+    <div class="card" onclick="openModal('👨‍🏫 Индивидуальное занятие со взрослым','Индивидуальное занятие 60 минут. Удобно для взрослых, гибкий график.','2000 руб',['img1.jpg'])">
+      <img src="img1.jpg" alt="Индивидуальное занятие взрослому"> <!-- Замените путь к картинке -->
+      <div class="card-title">👨‍🏫 Индивидуальное занятие со взрослым</div>
+      <div class="card-desc">Индивидуальное занятие 60 минут. Удобно для взрослых, гибкий график.</div>
+      <div class="price">2000 руб</div>
+      <button class="btn">Купить</button>
+    </div>
+
+    <!-- Карточка: индивидуальное занятие ребёнку -->
+    <div class="card" onclick="openModal('🧒 Индивидуальное занятие с ребёнком','Индивидуальное занятие 40–50 минут. Подходит для детей разного возраста.','2000 руб',['img2.jpg'])">
+      <img src="img2.jpg" alt="Индивидуальное занятие ребёнку">
+      <div class="card-title">🧒 Индивидуальное занятие с ребёнком</div>
+      <div class="card-desc">Индивидуальное занятие 40–50 минут. Подходит для детей.</div>
+      <div class="price">2000 руб</div>
+      <button class="btn">Купить</button>
+    </div>
+
+    <!-- Карточка: подготовка к экзамену -->
+    <div class="card" onclick="openModal('🎓 Подготовка к экзамену','Полный курс подготовки к ЕГЭ/экзаменам, разбор заданий и стратегия.','2500 руб',['img3.jpg'])">
+      <img src="img3.jpg" alt="Подготовка к экзамену">
+      <div class="card-title">🎓 Подготовка к экзамену</div>
+      <div class="card-desc">Полная подготовка к экзамену: теория, практика, стратегия.</div>
+      <div class="price">2500 руб</div>
+      <button class="btn">Купить</button>
+    </div>
+
+    <!-- Карточка: мини-группа -->
+    <div class="card" onclick="openModal('👥 Мини-группа (2–3 человека)','Занятия для 2–3 человек — баланс цены и внимания.','1500 руб',['img4.jpg'])">
+      <img src="img4.jpg" alt="Мини-группа">
+      <div class="card-title">👥 Мини-группа (2–3 человека)</div>
+      <div class="card-desc">Занятия в мини-группе (2–3 человека). Индивидуальный подход в группе.</div>
+      <div class="price">1500 руб</div>
+      <button class="btn">Купить</button>
+    </div>
+
+    <!-- Карточка: группа 4-7 -->
+    <div class="card" onclick="openModal('👨‍👩‍👧‍👦 Группа (4–7 человек)','Занятия для 4–7 человек — доступная цена при групповой динамике.','1000 руб',['img5.jpg'])">
+      <img src="img5.jpg" alt="Группа">
+      <div class="card-title">👨‍👩‍👧‍👦 Группа (4–7 человек)</div>
+      <div class="card-desc">Занятия в группе 4–7 человек. Активная работа в команде.</div>
+      <div class="price">1000 руб</div>
+      <button class="btn">Купить</button>
+    </div>
+
+  </div> <!-- /.grid услуг -->
+
+  <!-- МАТЕРИАЛЫ -->
+  <h2 class="section-title" style="margin-top:26px;">Материалы 📚</h2>
+  <p class="meta">Электронные наборы и интерактивные упражнения. В карточке указано краткое описание и цена.</p>
+
+  <div class="grid" style="margin-bottom:40px;">
+
+    <div class="card" onclick="openModal('📘 Набор интерактивных упражнений на словообразование для ЕГЭ','Набор интерактивных упражнений на словообразование для ЕГЭ — тренируйте навыки на реальных примерах экзаменационных заданий.','700 руб',['img6.jpg'])">
+      <img src="img6.jpg" alt="Словообразование">
+      <div class="card-title">📘 Набор интерактивных упражнений на словообразование для ЕГЭ</div>
+      <div class="card-desc">Тренажёр по словообразованию, задания как на ЕГЭ, интерактив.</div>
+      <div class="price">700 руб</div>
+      <button class="btn">Купить</button>
+    </div>
+
+    <div class="card" onclick="openModal('📙 Набор интерактивных упражнений для confusing words для ЕГЭ','Набор интерактивных упражнений для confusing words для ЕГЭ — упражнения и объяснения по запутывающим словам.','700 руб',['img7.jpg'])">
+      <img src="img7.jpg" alt="Confusing Words">
+      <div class="card-title">📙 Набор интерактивных упражнений для confusing words для ЕГЭ</div>
+      <div class="card-desc">Практика по confusing words: задания, объяснения, примеры.</div>
+      <div class="price">700 руб</div>
+      <button class="btn">Купить</button>
+    </div>
+
+    <div class="card" onclick="openModal('🎮 Игры, квесты, видео и песни','Развлекательные материалы: игры, квесты, видео и песни для обучения.','По разной цене',['img8.jpg'])">
+      <img src="img8.jpg" alt="Игры и видео">
+      <div class="card-title">🎮 Игры, квесты, видео и песни</div>
+      <div class="card-desc">Развивающие и обучающие материалы для разных целей и возрастов.</div>
+      <div class="price">По разной цене</div>
+      <button class="btn">Купить</button>
+    </div>
+
+  </div> <!-- /.grid материалов -->
+
+  <!-- Комментарий для тебя: здесь можно добавить секцию отзывов, FAQ или блок с вариантами оплаты -->
+
+</div> <!-- /.wrap -->
+
+
+<!-- МОДАЛ -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal">
+    <div class="close-btn" onclick="closeModal()">×</div>
+
+    <h2 id="modalTitle"></h2>
+
+    <!-- Карусель изображений: пока подставляются до 4 картинок -->
+    <div class="carousel">
+      <img id="carouselImg0" />
+      <img id="carouselImg1" />
+      <img id="carouselImg2" />
+      <img id="carouselImg3" />
+    </div>
+    <div class="carousel-controls">
+      <button onclick="prevImg()">Назад</button>
+      <button onclick="nextImg()">Вперёд</button>
+    </div>
+
+    <p id="modalDesc"></p>
+    <div class="price" id="modalPrice"></div>
+
+    <!-- Кнопка купить: можно заменить на ссылку/форма оплаты -->
+    <button class="btn" id="modalBuyBtn">Купить</button>
+
+    <!-- Комментарии: заменяй обработчик на свой URL/форму, например добавь атрибут data-link в карточке и читай его здесь -->
+  </div>
+</div>
+
+
+<!-- СКРИПТ: управление модальным окном и каруселью -->
+<script>
+  let modalImages = [];
+  let currentIndex = 0;
+
+  // Открывает модальное окно
+  // title - заголовок (строка), desc - описание (строка), price - цена (строка), images - массив путей до картинок
+  function openModal(title, desc, price, images){
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modalPrice').innerText = price;
+
+    modalImages = images || [];
+    const imgTags = document.querySelectorAll('.carousel img');
+    imgTags.forEach(img => { img.classList.remove('active'); img.style.display = 'none'; img.src = ''; });
+
+    modalImages.forEach((src, i) => {
+      if(imgTags[i]){ imgTags[i].src = src; imgTags[i].style.display = 'block'; }
+    });
+
+    currentIndex = 0;
+    if(modalImages.length > 0){ imgTags[0].classList.add('active'); }
+
+    document.getElementById('modalBg').style.display = 'flex';
+  }
+
+  function closeModal(){ document.getElementById('modalBg').style.display = 'none'; }
+
+  function nextImg(){
+    const imgTags = document.querySelectorAll('.carousel img');
+    if(modalImages.length <= 1) return;
+    imgTags[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex + 1) % modalImages.length;
+    imgTags[currentIndex].classList.add('active');
+  }
+  function prevImg(){
+    const imgTags = document.querySelectorAll('.carousel img');
+    if(modalImages.length <= 1) return;
+    imgTags[currentIndex].classList.remove('active');
+    currentIndex = (currentIndex - 1 + modalImages.length) % modalImages.length;
+    imgTags[currentIndex].classList.add('active');
+  }
+
+  // Пример: в реальной вёрстке можно в кнопке "Купить" добавить data-link с вашей ссылкой на оплату
+  document.getElementById('modalBuyBtn').addEventListener('click', function(){
+    // Здесь можно перенаправить на страницу оплаты, открыть форму или отправить запрос
+    alert('Замените обработчик покупки на ваш сценарий (ссылка/форма/корзина)');
+  });
+
+</script>
+
+</body>
+</html>
